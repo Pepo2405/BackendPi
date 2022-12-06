@@ -17,7 +17,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-  const { name, dificulty, season, duration,country } = req.body;
+  const { name, dificulty, season, duration,countries } = req.body;
+  console.log("body del request: ",req.body)
     if (!name || !dificulty || !season || !duration)
       throw new Error("Favor de llenar todos los campos");
     const response = await addActivity({
@@ -25,10 +26,11 @@ router.post("/", async (req, res) => {
       dificulty,
       season,
       duration,
-      country
+      countries
     });
     res.status(200).send(response);
   } catch (error) {
+    console.log(error)
     res.status(400).send(error.message);
   }
 });

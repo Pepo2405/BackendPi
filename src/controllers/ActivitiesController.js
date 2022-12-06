@@ -10,20 +10,32 @@ const getAllActivities = async () => {
 const addActivity = async (req) => {
   try {
     const { name, dificulty, season, duration } = req;
-    const country = req.country;
-    const response = await Activities.create({
-      name,
-      dificulty,
-      season,
-      duration,
-    });
-    country?.forEach(async (country) => {
-      const paises = await Country.findAll({
-        where: { name: { [Op.iLike]: country } },
-      });
+    const countries = req.countries;
 
-      await response.addCountry(paises);
+    const [response, created] = await Activities.findOrCreate({
+      where: { name: name },
+      defaults: { dificulty, season, duration },
     });
+
+    if (!created) {
+      response.dificulty = dificulty;
+      response.season = season;
+      response.duration = duration;
+      response.save();
+    }
+
+    countries?.forEach(async (country) => {
+      try {
+        const paises = await Country.findAll({
+          where: { name: { [Op.iLike]: country } },
+        });
+        await response.addCountry(paises);
+        console.log("se agrego");
+      } catch (err) {
+        throw err;
+      }
+    });
+
     return response;
   } catch (error) {
     throw new Error(error.message);

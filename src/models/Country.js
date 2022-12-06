@@ -15,6 +15,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      cioc:{type:DataTypes.STRING},
       flag_img: { allowNull: false, type: DataTypes.STRING },
       capital: { type: DataTypes.ARRAY(DataTypes.STRING) },
       subregion: { type: DataTypes.STRING },

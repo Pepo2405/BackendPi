@@ -11,23 +11,29 @@ const firstLoad = async () => {
       console.log("Empty db");
       console.log("Getting Countries from API");
       const response = await axios.get("https://restcountries.com/v3.1/all");
+      console.log("llegue 0");
+
       const parcedInfo = response.data.map((countrie) => {
         const ctlanguages = Object.values(countrie.languages || "");
         const ctCapitals = Object.values(countrie.capital || "");
+        // console.log(countrie);
 
         return {
           ...countrie,
           name: countrie.name.common,
-          id: countrie.ccn3 || countrie.cca3,
+          id: countrie.cioc || countrie.cca3,
           continent_name: countrie.continents[0],
           flag_img: countrie.flags.png,
-          coatOfArms: countrie.coatOfArms.png || countrie.coatOfArms.svg,
+          coatOfArms: countrie.coatOfArms?.png || countrie.coatOfArms.svg,
           timezones: countrie.timezones[0],
           languages: ctlanguages,
           capital: ctCapitals,
         };
       });
+      console.log("llegue create");
+
       const newCountries = await Country.bulkCreate(parcedInfo);
+
       return newCountries;
     } else {
       return countries;
@@ -53,10 +59,9 @@ const getCountryById = async (id) => {
     const country = await Country.findByPk(id);
     console.log(country);
     if (!country) throw new Error("No se encontro el pais con el id preoveido");
-    else return country
-      
+    else return country;
   } catch (err) {
-    throw new Error(err)
+    throw new Error(err);
   }
 };
-module.exports = { firstLoad, getCountryByName,getCountryById };
+module.exports = { firstLoad, getCountryByName, getCountryById };
