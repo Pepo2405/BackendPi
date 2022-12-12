@@ -9,12 +9,12 @@ const getAllActivities = async () => {
 };
 const addActivity = async (req) => {
   try {
-    const { name, dificulty, season, duration } = req;
+    const { name, dificulty, season, duration,img } = req;
     const countries = req.countries;
 
     const [response, created] = await Activities.findOrCreate({
       where: { name: name },
-      defaults: { dificulty, season, duration },
+      defaults: { dificulty, season, duration,img },
     });
 
     if (!created) {

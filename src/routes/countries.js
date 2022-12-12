@@ -10,7 +10,6 @@ router.get("/", async (req, res) => {
      if (!name) {
       return res.status(200).send(paises);
     }else{
-      console.log(name);
       const country = await getCountryByName(name);
       if(!country.length)throw new Error("Pais no encontrado")
       return res.status(200).send(country);

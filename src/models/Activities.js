@@ -24,7 +24,9 @@ module.exports = (sequelize) => {
       },
       season: { allowNull: false, type: DataTypes.STRING },
       duration: { type: DataTypes.STRING, allowNull: false },
+      img:{type:DataTypes.STRING}
     },
+
     { timestamps: false }
   );
 };
