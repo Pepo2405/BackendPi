@@ -11,7 +11,6 @@ const firstLoad = async () => {
       console.log("Empty db");
       console.log("Getting Countries from API");
       const response = await axios.get("https://restcountries.com/v3.1/all");
-      console.log("llegue 0");
 
       const parcedInfo = response.data.map((countrie) => {
         const ctlanguages = Object.values(countrie.languages || "");
@@ -30,7 +29,6 @@ const firstLoad = async () => {
           capital: ctCapitals,
         };
       });
-      console.log("llegue create");
 
       const newCountries = await Country.bulkCreate(parcedInfo);
 
@@ -57,7 +55,6 @@ const getCountryByName = async (name) => {
 const getCountryById = async (id) => {
   try {
     const country = await Country.findByPk(id);
-    console.log(country);
     if (!country) throw new Error("No se encontro el pais con el id preoveido");
     else return country;
   } catch (err) {

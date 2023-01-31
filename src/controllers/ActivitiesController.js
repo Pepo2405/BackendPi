@@ -21,6 +21,7 @@ const addActivity = async (req) => {
       response.dificulty = dificulty;
       response.season = season;
       response.duration = duration;
+      response.img = img
       response.save();
     }
 
